@@ -1,10 +1,9 @@
 import React from 'react';
 // import Header from './Header';
 import './App.css';
-
+import styled from 'styled-components'
 
 let arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-let rezarr = []
 
 class App extends React.Component {
   constructor(props) {
@@ -77,32 +76,96 @@ class App extends React.Component {
     }, 200);
 
   }
-
-
   render() {
-    console.log(this.state.secondNumber)
     return (
-      <div className="wrapper" >
-        <input placeholder="введите значение" onChange={this.handleChange} value={this.state.inp} type="text"></input>
+      <Wrapper>
+        <Input placeholder="введите значение" onChange={this.handleChange} value={this.state.inp} type="number"></Input>
         <br />
         <br />
-        <div>
+        <FlexWrapper>
           {
             arr.map((item, i) => {
-              return (<button value={i} type="button" onClick={this.hendlClick} key={i}>{i}</button>)
+              return (<Button value={i} type="button" onClick={this.hendlClick} key={i}>{i}</Button>)
             })
           }
           <br />
           <br />
-          <button onClick={this.handleRefreshItems}>CE</button>
-          <button onClick={this.handleRez}>=</button>
-          <button value="-" onClick={this.handleExpression}>-</button>
-          <button value="+" onClick={this.handleExpression}>+</button>
-          <button value="*" onClick={this.handleExpression}>*</button>
-        </div>
-      </div >
+        </FlexWrapper>
+        <WrapperExpresion>
+          <ButtonExpresion onClick={this.handleRefreshItems}>CE</ButtonExpresion>
+          <ButtonExpresion onClick={this.handleRez}>=</ButtonExpresion>
+          <ButtonExpresion value="-" onClick={this.handleExpression}>-</ButtonExpresion>
+          <ButtonExpresion value="+" onClick={this.handleExpression}>+</ButtonExpresion>
+          <ButtonExpresion value="*" onClick={this.handleExpression}>*</ButtonExpresion>
+        </WrapperExpresion>
+      </Wrapper >
     );
   }
 }
 
 export default App;
+const FlexWrapper = styled.div`
+  width:300px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+`;
+const WrapperExpresion = styled.div`
+  margin-top:2rem;
+  display:flex;
+`;
+
+const Wrapper = styled.div`
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+`;
+
+const Button = styled.button`
+  border: 2px solid #6495ED;
+  border-radius:5px;
+ -webkit-appearance: none;
+  font-weight:bold;
+  font-size:24px;
+  margin-top:1rem;
+  min-width: 70px;
+  height: 70px;
+  cursor: pointer;
+  &:nth-child(2){
+  margin-left:30px;
+  }
+  &:nth-child(3){
+    margin-left:30px;
+  }
+  &:nth-child(5){
+    margin-left:30px;
+  }
+  &:nth-child(6){
+    margin-left:30px;
+  }
+  &:nth-child(8){
+    margin-left:30px;
+  }
+  &:nth-child(9){
+    margin-left:30px;
+  }
+`;
+const ButtonExpresion = styled.button`
+  cursor:pointer;
+  font-size:24px;
+  margin-top:1rem;
+  min-width: 70px;
+  height: 70px;
+`;
+const Input = styled.input`
+  padding-left:15px;
+  outline:0;
+  margin-top:2rem;
+  width: 300px;
+  height: 50px;
+  font-size: 24px;
+  &:focus{
+    outline:0;
+  }
+`;
