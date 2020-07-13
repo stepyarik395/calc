@@ -17,8 +17,9 @@ class App extends React.Component {
     }
     this.hendlClick = this.hendlClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handlePlus = this.handlePlus.bind(this);
+    this.handleExpression = this.handleExpression.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.handleRefreshItems = this.handleRefreshItems.bind(this);
     this.handleRez = this.handleRez.bind(this);
   }
   hendlClick = (e) => {
@@ -33,10 +34,10 @@ class App extends React.Component {
       inp: num,
     }));
   }
-  handlePlus = (e) => {
+  handleExpression = (e) => {
     let num = e.target.value;
     this.setState(() => ({
-      firstNumber: this.state.inp,
+      firstNumber: Number(this.state.inp),
       vac: num
     }));
     this.handleRefresh()
@@ -46,24 +47,40 @@ class App extends React.Component {
       inp: '',
     }));
   }
+  handleRefreshItems = () => {
+    this.setState(() => ({
+      firstNumber: '',
+      secondNumber: '',
+      inp: ''
+    }));
+  }
   handleRez = () => {
-    if (this.state.vac === '+') {
-      this.setState(() => ({
-        secondNumber: this.state.inp,
-        inp: '',
-        // inp: this.state.firstNumber + this.state.secondNumber
-      }));
-    } else {
-      console.log("false");
-    }
+    this.setState(() => ({
+      secondNumber: Number(this.state.inp),
+      inp: '',
+    }));
+    setTimeout(() => {
+      if (this.state.vac === '+') {
+        this.setState(() => ({
+          inp: this.state.firstNumber + this.state.secondNumber
+        }));
+      } else if (this.state.vac === '-') {
+        this.setState(() => ({
+          inp: this.state.firstNumber - this.state.secondNumber
+        }));
+      }
+      else if (this.state.vac === '*') {
+        this.setState(() => ({
+          inp: this.state.firstNumber * this.state.secondNumber
+        }));
+      }
+    }, 200);
+
   }
 
 
   render() {
     console.log(this.state.secondNumber)
-    // console.log(this.state.firstNumber)
-    // console.log(this.state.vac)
-    // console.log(this.state.inp);
     return (
       <div className="wrapper" >
         <input placeholder="введите значение" onChange={this.handleChange} value={this.state.inp} type="text"></input>
@@ -77,10 +94,11 @@ class App extends React.Component {
           }
           <br />
           <br />
+          <button onClick={this.handleRefreshItems}>CE</button>
           <button onClick={this.handleRez}>=</button>
-          <button>-</button>
-          <button value="+" onClick={this.handlePlus}>+</button>
-          <button>*</button>
+          <button value="-" onClick={this.handleExpression}>-</button>
+          <button value="+" onClick={this.handleExpression}>+</button>
+          <button value="*" onClick={this.handleExpression}>*</button>
         </div>
       </div >
     );
